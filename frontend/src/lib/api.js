@@ -98,6 +98,10 @@ export const api = {
   // Health
   health: () => request('/health'),
 
+  // BD activa
+  getDbStatus: () => request('/db/status'),
+  switchDb:    (db) => request('/db/switch', { method: 'POST', body: { db } }),
+
   // Reset (TESTING ONLY)
   resetSystem: (fecha_inicio, fecha_fin) => request('/reset', { method: 'POST', body: { fecha_inicio, fecha_fin } }),
 };

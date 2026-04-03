@@ -18,6 +18,7 @@ import { api } from './lib/api.js';
 
 export default function App() {
   const [apiOk, setApiOk] = useState(false);
+  const [activeDb, setActiveDb] = useState('prueba');
   const [user, setUser] = useState(() => {
     const token = localStorage.getItem('token');
     const usuario = localStorage.getItem('usuario');
@@ -26,7 +27,9 @@ export default function App() {
   });
 
   useEffect(() => {
-    const check = () => api.health().then(() => setApiOk(true)).catch(() => setApiOk(false));
+    const check = () => api.health()
+      .then((data) => { setApiOk(true); if (data.activeDB) setActiveDb(data.activeDB); })
+      .catch(() => setApiOk(false));
     check();
     const interval = setInterval(check, 30000);
     return () => clearInterval(interval);
@@ -61,7 +64,7 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <Sidebar apiOk={apiOk} usuario={user.usuario} role={user.role} onLogout={handleLogout} />
+      <Sidebar apiOk={apiOk} usuario={user.usuario} role={user.role} onLogout={handleLogout} activeDb={activeDb} onSwitchDb={setActiveDb} />
       <main style={{ flex: 1, marginLeft: 228, padding: '32px 40px', minHeight: '100vh', maxWidth: 'calc(100vw - 228px)' }}>
         {!apiOk && (
           <div style={{ background: '#2a1a1a', border: '1px solid #5a2a2a', borderRadius: 10, padding: '12px 18px', marginBottom: 20, color: '#eb5757', fontSize: 13, display: 'flex', alignItems: 'center', gap: 10 }}>

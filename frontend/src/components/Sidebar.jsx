@@ -1,4 +1,7 @@
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { api } from '../lib/api.js';
+import toast from 'react-hot-toast';
 
 const NAV_ADMIN = [
   {
@@ -43,8 +46,23 @@ const NAV_VIEWER = [
   }
 ];
 
-export default function Sidebar({ apiOk, usuario, role, onLogout }) {
+export default function Sidebar({ apiOk, usuario, role, onLogout, activeDb, onSwitchDb }) {
   const NAV = role === 'viewer' ? NAV_VIEWER : NAV_ADMIN;
+  const [switching, setSwitching] = useState(false);
+
+  async function handleSwitch() {
+    const target = activeDb === 'prueba' ? 'real' : 'prueba';
+    setSwitching(true);
+    try {
+      const data = await api.switchDb(target);
+      onSwitchDb(data.db);
+      toast.success(`BD cambiada a "${data.db}"`);
+    } catch (err) {
+      toast.error(err.message || 'Error al cambiar BD');
+    } finally {
+      setSwitching(false);
+    }
+  }
   return (
     <aside style={{
       width: 228, background: '#0a0d12',
@@ -106,9 +124,33 @@ export default function Sidebar({ apiOk, usuario, role, onLogout }) {
             </button>
           </div>
         )}
+        {role === 'admin' && (
+          <div style={{ marginBottom: 10 }}>
+            <div style={{ fontSize: 9, color: '#2a3a4a', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>Base de datos</div>
+            <button
+              onClick={handleSwitch}
+              disabled={switching}
+              style={{
+                width: '100%', padding: '6px 10px', borderRadius: 6, border: 'none', cursor: switching ? 'default' : 'pointer',
+                background: activeDb === 'real' ? '#1a3a1a' : '#1a2a3a',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                transition: 'background 0.2s', opacity: switching ? 0.6 : 1,
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 7, height: 7, borderRadius: '50%', background: activeDb === 'real' ? '#6fcf97' : '#f2c94c', display: 'inline-block' }} />
+                <span style={{ fontSize: 11, color: activeDb === 'real' ? '#6fcf97' : '#f2c94c', fontWeight: 700 }}>
+                  {activeDb === 'real' ? 'Real' : 'Prueba'}
+                </span>
+              </span>
+              <span style={{ fontSize: 10, color: '#3a5a7a' }}>
+                {switching ? '...' : `→ ${activeDb === 'real' ? 'Prueba' : 'Real'}`}
+              </span>
+            </button>
+          </div>
+        )}
         <div style={{ fontSize: 10, color: '#2a3a4a' }}>
-          <div>BD: <span style={{ color: '#3a5a7a' }}>Prueba · PostgreSQL</span></div>
-          <div style={{ marginTop: 2 }}>BANDEC · v1.0.0</div>
+          <div>BANDEC · v1.0.0</div>
         </div>
       </div>
     </aside>

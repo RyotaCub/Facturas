@@ -43,6 +43,9 @@ app.use('/api/clientes',     requireAuth, requireRole('admin'), require('./route
 app.use('/api/facturas',     requireAuth, requireRole('admin'), require('./routes/facturas'));
 app.use('/api/bandec',       requireAuth, requireRole('admin'), require('./routes/bandec'));
 
+// Cambio de BD activa — solo admin
+app.use('/api/db', requireAuth, requireRole('admin'), require('./routes/db'));
+
 // Rutas de transferencias — admin y viewer (PATCH restringido dentro de la ruta)
 app.use('/api/transferencias', requireAuth, require('./routes/transferencias'));
 
@@ -63,6 +66,7 @@ app.get('/api/health', async (req, res) => {
     res.json({
       status:    'ok',
       db:        'connected',
+      activeDB:  pool.getActiveDB(),
       timestamp: new Date().toISOString(),
       version:   '1.0.0',
       env:       process.env.NODE_ENV || 'development',
