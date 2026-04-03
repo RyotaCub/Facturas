@@ -905,7 +905,7 @@ export default function Transferencias() {
       {/* Barra de acciones flotante cuando hay selección */}
       {modoSeleccion && selectedIds.size > 0 && (
         <div style={{
-          position: 'fixed', bottom: 28, left: '50%', transform: 'translateX(-50%)',
+          position: 'fixed', top: 12, left: '50%', transform: 'translateX(-50%)',
           zIndex: 500, display: 'flex', alignItems: 'center', gap: 14,
           background: pendienteConfirmar ? '#1a0a0a' : '#111827',
           border: `1.5px solid ${pendienteConfirmar ? C.red : '#7c3aed'}`,
