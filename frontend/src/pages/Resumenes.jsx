@@ -187,7 +187,7 @@ export default function Resumenes() {
     <div className="fade-in">
       <div style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: 26, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#e8f0fe' }}>Resúmenes Minoristas</h1>
-        <p style={{ color: '#3a4a5a', fontSize: 13, marginTop: 4 }}>Puntos de Venta — resúmenes diarios de ventas</p>
+        <p style={{ color: '#7dd3fc', fontSize: 13, marginTop: 4 }}>Puntos de Venta — resúmenes diarios de ventas</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14, marginBottom: 24 }}>
@@ -206,7 +206,7 @@ export default function Resumenes() {
             <thead>
               <tr style={{ borderBottom: '1px solid #1e2530' }}>
                 {['Punto de Venta', 'Días', 'Efectivo', 'Transferencia', 'Total'].map((h, i) => (
-                  <th key={h} style={{ padding: '6px 12px', textAlign: i === 0 ? 'left' : 'right', fontSize: 10, color: '#3a4a5a', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700 }}>{h}</th>
+                  <th key={h} style={{ padding: '6px 12px', textAlign: i === 0 ? 'left' : 'right', fontSize: 10, color: '#7dd3fc', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700 }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -248,7 +248,7 @@ export default function Resumenes() {
             <div style={{ fontSize: 11, color: '#8899bb', textTransform: 'uppercase', letterSpacing: 0.9, fontWeight: 700 }}>
               🏪 Stock distribuido — {totalesPorProducto.length} producto{totalesPorProducto.length !== 1 ? 's' : ''}
             </div>
-            <span style={{ fontSize: 13, color: '#3a4a5a', transition: 'transform 0.2s', display: 'inline-block', transform: stockCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)' }}>▼</span>
+            <span style={{ fontSize: 13, color: '#7dd3fc', transition: 'transform 0.2s', display: 'inline-block', transform: stockCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)' }}>▼</span>
           </div>
           {!stockCollapsed && (
             <div style={{ overflowX: 'auto', marginTop: 12 }}>
@@ -257,7 +257,7 @@ export default function Resumenes() {
               <thead>
                 <tr style={{ borderBottom: '1px solid #1e2530' }}>
                   {['Producto', 'Total cantidad', 'UM', 'Total importe', 'Líneas'].map(h => (
-                    <th key={h} style={{ padding: '6px 10px', textAlign: h === 'Total importe' || h === 'Total cantidad' ? 'right' : 'left', color: '#3a4a5a', fontSize: 10, letterSpacing: 0.8, textTransform: 'uppercase', fontWeight: 600 }}>{h}</th>
+                    <th key={h} style={{ padding: '6px 10px', textAlign: h === 'Total importe' || h === 'Total cantidad' ? 'right' : 'left', color: '#7dd3fc', fontSize: 10, letterSpacing: 0.8, textTransform: 'uppercase', fontWeight: 600 }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -277,11 +277,11 @@ export default function Resumenes() {
                       >
                         <td style={{ padding: '8px 10px' }}>
                           <span style={{ color: seleccionado ? '#f2c94c' : '#e8f0fe', fontWeight: 600 }}>{p.producto}</span>
-                          {p.codigo && <span style={{ color: '#3a4a5a', fontSize: 11, marginLeft: 6 }}>{p.codigo}</span>}
+                          {p.codigo && <span style={{ color: '#7dd3fc', fontSize: 11, marginLeft: 6 }}>{p.codigo}</span>}
                           <span style={{ marginLeft: 8, fontSize: 11, color: seleccionado ? '#c8a820' : '#2a3a4a' }}>{seleccionado ? '▲' : '▼'}</span>
                         </td>
                         <td style={{ padding: '8px 10px', textAlign: 'right', color: '#f2c94c', fontWeight: 700 }}>{fmt(p.cantidad)}</td>
-                        <td style={{ padding: '8px 10px', color: '#3a4a5a', fontSize: 11 }}>{p.um}</td>
+                        <td style={{ padding: '8px 10px', color: '#7dd3fc', fontSize: 11 }}>{p.um}</td>
                         <td style={{ padding: '8px 10px', textAlign: 'right', color: '#7eb8f7', fontWeight: 700 }}>${fmt(p.importe)}</td>
                         <td style={{ padding: '8px 10px', textAlign: 'center' }}>
                           <span style={{ background: seleccionado ? '#2a1a00' : '#1a2030', border: `1px solid ${seleccionado ? '#8a6a00' : '#2a3040'}`, borderRadius: 5, padding: '2px 8px', fontSize: 11, color: seleccionado ? '#f2c94c' : '#8899bb' }}>{p.lineas}</span>
@@ -316,7 +316,7 @@ export default function Resumenes() {
               </tbody>
               <tfoot>
                 <tr style={{ borderTop: '2px solid #1e2530' }}>
-                  <td colSpan={3} style={{ padding: '8px 10px', color: '#3a4a5a', fontSize: 11, fontWeight: 700 }}>TOTAL GENERAL</td>
+                  <td colSpan={3} style={{ padding: '8px 10px', color: '#7dd3fc', fontSize: 11, fontWeight: 700 }}>TOTAL GENERAL</td>
                   <td style={{ padding: '8px 10px', textAlign: 'right', color: '#6fcf97', fontWeight: 800, fontSize: 14 }}>${fmt(totalGen)}</td>
                   <td />
                 </tr>
@@ -330,18 +330,18 @@ export default function Resumenes() {
       {/* Filtros + colapsar/expandir */}
       <div style={{ display: 'flex', gap: 10, marginBottom: 18, flexWrap: 'wrap', alignItems: 'center' }}>
         <button onClick={() => setFiltroPeriodo('')}
-          style={{ padding: '7px 16px', borderRadius: 8, border: !filtroPeriodo ? '1px solid #2563eb' : '1px solid #1e2530', background: !filtroPeriodo ? '#1a2540' : 'none', color: !filtroPeriodo ? '#7eb8f7' : '#3a4a5a', cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }}>
+          style={{ padding: '7px 16px', borderRadius: 8, border: !filtroPeriodo ? '1px solid #2563eb' : '1px solid #1e2530', background: !filtroPeriodo ? '#1a2540' : 'none', color: !filtroPeriodo ? '#7eb8f7' : '#7dd3fc', cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }}>
           Todos
         </button>
         {periodos.map(p => (
           <button key={p.id} onClick={() => setFiltroPeriodo(String(p.id))}
-            style={{ padding: '7px 16px', borderRadius: 8, border: filtroPeriodo === String(p.id) ? '1px solid #2563eb' : '1px solid #1e2530', background: filtroPeriodo === String(p.id) ? '#1a2540' : 'none', color: filtroPeriodo === String(p.id) ? '#7eb8f7' : '#3a4a5a', cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }}>
+            style={{ padding: '7px 16px', borderRadius: 8, border: filtroPeriodo === String(p.id) ? '1px solid #2563eb' : '1px solid #1e2530', background: filtroPeriodo === String(p.id) ? '#1a2540' : 'none', color: filtroPeriodo === String(p.id) ? '#7eb8f7' : '#7dd3fc', cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }}>
             {p.nombre}
           </button>
         ))}
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 6 }}>
-          <button onClick={collapseAll} style={{ padding: '5px 12px', borderRadius: 7, border: '1px solid #1e2530', background: 'none', color: '#3a4a5a', cursor: 'pointer', fontSize: 11, fontFamily: 'inherit', fontWeight: 600 }}>⊖ Colapsar todo</button>
-          <button onClick={expandAll}   style={{ padding: '5px 12px', borderRadius: 7, border: '1px solid #1e2530', background: 'none', color: '#3a4a5a', cursor: 'pointer', fontSize: 11, fontFamily: 'inherit', fontWeight: 600 }}>⊕ Expandir todo</button>
+          <button onClick={collapseAll} style={{ padding: '5px 12px', borderRadius: 7, border: '1px solid #1e2530', background: 'none', color: '#7dd3fc', cursor: 'pointer', fontSize: 11, fontFamily: 'inherit', fontWeight: 600 }}>⊖ Colapsar todo</button>
+          <button onClick={expandAll}   style={{ padding: '5px 12px', borderRadius: 7, border: '1px solid #1e2530', background: 'none', color: '#7dd3fc', cursor: 'pointer', fontSize: 11, fontFamily: 'inherit', fontWeight: 600 }}>⊕ Expandir todo</button>
         </div>
       </div>
 
@@ -363,14 +363,14 @@ export default function Resumenes() {
                       <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 16, fontWeight: 800, color: '#f2c94c', marginBottom: 4 }}>
                         📅 {fmtDate(r.fecha)}
                       </div>
-                      <div style={{ fontSize: 12, color: '#3a4a5a' }}>
+                      <div style={{ fontSize: 12, color: '#7dd3fc' }}>
                         {r.punto_venta_nombre || r.punto_venta || 'Punto de Venta'} — Venta Minorista
                       </div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                       <div style={{ textAlign: 'right' }}>
                         <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 20, fontWeight: 800, color: '#6fcf97' }}>${fmt(r.total)}</div>
-                        <div style={{ fontSize: 11, color: '#3a4a5a', marginTop: 2 }}>
+                        <div style={{ fontSize: 11, color: '#7dd3fc', marginTop: 2 }}>
                           💵 ${fmt(r.efectivo)} · 🏦 ${fmt(r.total_transferencia)}
                         </div>
                       </div>
@@ -380,7 +380,7 @@ export default function Resumenes() {
                           🗑️ Eliminar
                         </Btn>
                       </div>
-                      <span style={{ fontSize: 14, color: '#3a4a5a', display: 'inline-block', transition: 'transform 0.2s', transform: dayCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)' }}>▼</span>
+                      <span style={{ fontSize: 14, color: '#7dd3fc', display: 'inline-block', transition: 'transform 0.2s', transform: dayCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)' }}>▼</span>
                     </div>
                   </div>
 
@@ -396,7 +396,7 @@ export default function Resumenes() {
                         <div style={{ fontSize: 11, color: '#4a6a8a', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8 }}>
                           📦 Productos ({(r.items || []).filter(i => i && i.producto).length})
                         </div>
-                        <span style={{ fontSize: 12, color: '#3a4a5a', display: 'inline-block', transition: 'transform 0.2s', transform: productsCollapsed[r.id] ? 'rotate(-90deg)' : 'rotate(0deg)' }}>▼</span>
+                        <span style={{ fontSize: 12, color: '#7dd3fc', display: 'inline-block', transition: 'transform 0.2s', transform: productsCollapsed[r.id] ? 'rotate(-90deg)' : 'rotate(0deg)' }}>▼</span>
                       </div>
                       {!productsCollapsed[r.id] && (
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 8, marginTop: 8 }}>
@@ -404,7 +404,7 @@ export default function Resumenes() {
                             <div key={j} style={{ background: '#141920', border: '1px solid #1e2530', borderRadius: 8, padding: '10px 14px' }}>
                               <div style={{ fontSize: 13, fontWeight: 600, color: '#e8f0fe' }}>{item.producto}</div>
                               {item.codigo && <div style={{ fontSize: 10, color: '#4a6a8a', fontWeight: 700, marginTop: 1 }}>{item.codigo}</div>}
-                              <div style={{ fontSize: 11, color: '#3a4a5a', marginTop: 3 }}>{fmt(item.cantidad)} {item.um} × ${fmt(item.precio)}</div>
+                              <div style={{ fontSize: 11, color: '#7dd3fc', marginTop: 3 }}>{fmt(item.cantidad)} {item.um} × ${fmt(item.precio)}</div>
                               <div style={{ fontSize: 14, fontWeight: 700, color: '#f2c94c', marginTop: 4 }}>${fmt(item.importe)}</div>
                             </div>
                           ))}
@@ -415,12 +415,12 @@ export default function Resumenes() {
                     {/* Transferencias usadas */}
                     {(r.transferencias_detalle || []).filter(t => t && t.ref).length > 0 && (
                       <div style={{ borderTop: '1px solid #1e2530', paddingTop: 10 }}>
-                        <div style={{ fontSize: 11, color: '#3a4a5a', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>Transferencias Aplicadas</div>
+                        <div style={{ fontSize: 11, color: '#7dd3fc', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>Transferencias Aplicadas</div>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                           {(r.transferencias_detalle || []).filter(t => t && t.ref).map((t, i) => (
                             <div key={i} style={{ background: '#1a1a3a', border: '1px solid #2a2a5a', borderRadius: 6, padding: '5px 10px', fontSize: 12 }}>
                               <span style={{ color: '#bb87fc' }}>{t.ref}</span>
-                              <span style={{ color: '#3a4a5a' }}> ({t.prefijo})</span>
+                              <span style={{ color: '#7dd3fc' }}> ({t.prefijo})</span>
                               <span style={{ color: '#6fcf97', marginLeft: 6, fontWeight: 700 }}>${fmt(t.importe)}</span>
                             </div>
                           ))}

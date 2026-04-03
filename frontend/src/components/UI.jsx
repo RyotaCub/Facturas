@@ -153,11 +153,11 @@ export const Card = React.memo(function Card({ children, style = {} }) {
 export const StatCard = React.memo(function StatCard({ label, value, sub, color = '#7eb8f7', icon }) {
   return (
     <div style={{ background: '#141920', border: '1px solid #1e2530', borderRadius: 12, padding: '18px 20px' }}>
-      <div style={{ fontSize: 11, color: '#4a5568', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+      <div style={{ fontSize: 11, color: '#7dd3fc', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
         {icon && <span>{icon}</span>}{label}
       </div>
       <div style={{ fontSize: 22, fontWeight: 700, color, fontFamily: "'Syne', sans-serif" }}>{value}</div>
-      {sub && <div style={{ fontSize: 11, color: '#3a4a5a', marginTop: 4 }}>{sub}</div>}
+      {sub && <div style={{ fontSize: 11, color: '#7dd3fc', marginTop: 4 }}>{sub}</div>}
     </div>
   );
 });
@@ -170,7 +170,7 @@ export function Table({ headers, children, empty = 'Sin datos' }) {
         <thead>
           <tr style={{ borderBottom: '2px solid #1e2530' }}>
             {headers.map((h, i) => (
-              <th key={i} style={{ padding: '10px 14px', textAlign: h.align || 'left', color: '#4a5568', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase', fontWeight: 600, whiteSpace: 'nowrap' }}>
+              <th key={i} style={{ padding: '10px 14px', textAlign: h.align || 'left', color: '#7dd3fc', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase', fontWeight: 600, whiteSpace: 'nowrap' }}>
                 {typeof h === 'string' ? h : (h.label || '')}
               </th>
             ))}

@@ -190,7 +190,7 @@ export default function Clientes() {
           <h1 style={{ fontSize: 26, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#e8f0fe' }}>
             Clientes
           </h1>
-          <p style={{ color: '#3a4a5a', fontSize: 13, marginTop: 4 }}>
+          <p style={{ color: '#7dd3fc', fontSize: 13, marginTop: 4 }}>
             {clientes.length} registros
             {conProblemas > 0 && (
               <span style={{ marginLeft: 10, color: '#f2c94c', fontWeight: 600 }}>
@@ -316,7 +316,7 @@ export default function Clientes() {
                     <td style={{ padding: '10px 14px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <span style={{ color: '#e8f0fe', fontWeight: 600, fontSize: 13 }}>
-                          {c.nombre || <span style={{ color: '#3a4a5a', fontStyle: 'italic' }}>sin nombre</span>}
+                          {c.nombre || <span style={{ color: '#7dd3fc', fontStyle: 'italic' }}>sin nombre</span>}
                         </span>
                         {problema && (
                           <span style={{
@@ -358,7 +358,7 @@ export default function Clientes() {
                     </td>
 
                     {/* Última actividad */}
-                    <td style={{ padding: '10px 14px', color: '#3a4a5a', fontSize: 12 }}>
+                    <td style={{ padding: '10px 14px', color: '#7dd3fc', fontSize: 12 }}>
                       {lastAct ? fmtDate(lastAct) : <span style={{ color: '#1e2530' }}>—</span>}
                     </td>
 
@@ -381,7 +381,7 @@ export default function Clientes() {
                         ? <Badge color="#bb87fc">Con facturas</Badge>
                         : Number(c.total_transferencias) > 0
                           ? <Badge color="#3a7fc1">Solo transf.</Badge>
-                          : <Badge color="#3a4a5a">Sin actividad</Badge>
+                          : <Badge color="#7dd3fc">Sin actividad</Badge>
                       }
                     </td>
 

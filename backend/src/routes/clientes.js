@@ -165,6 +165,7 @@ router.post('/sync', async (req, res) => {
       FROM transferencias
       WHERE nombre IS NOT NULL AND TRIM(nombre) <> ''
         AND ci IS NOT NULL AND TRIM(ci) <> ''
+        AND importe < 20000
       ON CONFLICT (ci) DO NOTHING
     `);
     res.json({ insertados: rowCount });

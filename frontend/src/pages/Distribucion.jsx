@@ -143,7 +143,7 @@ export default function Distribucion() {
     <div className="fade-in">
       <div style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: 26, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#e8f0fe' }}>Gestión de Distribución</h1>
-        <p style={{ color: '#3a4a5a', fontSize: 13, marginTop: 4 }}>
+        <p style={{ color: '#7dd3fc', fontSize: 13, marginTop: 4 }}>
           Distribución entre <strong style={{ color: '#7eb8f7' }}>Almacén Central</strong> (mayorista) y <strong style={{ color: '#f2c94c' }}>Puntos de Venta</strong> (minoristas)
         </p>
       </div>
@@ -158,7 +158,7 @@ export default function Distribucion() {
               </h3>
               <button
                 onClick={() => setResultado(null)}
-                style={{ background: 'none', border: 'none', color: '#3a4a5a', cursor: 'pointer', fontSize: 18, padding: '0 4px' }}
+                style={{ background: 'none', border: 'none', color: '#7dd3fc', cursor: 'pointer', fontSize: 18, padding: '0 4px' }}
               >✕</button>
             </div>
 
@@ -171,7 +171,7 @@ export default function Distribucion() {
                 { label: 'Resúmenes PV', value: resultado.resumenes_generados, color: '#6fcf97' },
               ].map(({ label, value, color }) => (
                 <div key={label} style={{ background: '#0a0f18', border: '1px solid #1e2530', borderRadius: 8, padding: '12px 14px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 11, color: '#3a4a5a', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>{label}</div>
+                  <div style={{ fontSize: 11, color: '#7dd3fc', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>{label}</div>
                   <div style={{ fontSize: 26, fontWeight: 800, color, fontFamily: "'Syne', sans-serif" }}>{value}</div>
                 </div>
               ))}
@@ -193,15 +193,15 @@ export default function Distribucion() {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, fontSize: 12 }}>
                   <div>
-                    <div style={{ color: '#3a4a5a', marginBottom: 2 }}>Inventario esperado</div>
+                    <div style={{ color: '#7dd3fc', marginBottom: 2 }}>Inventario esperado</div>
                     <div style={{ color: '#7eb8f7', fontWeight: 700 }}>${resultado.cuadre_almacen.inventario.toLocaleString('es-CU', { minimumFractionDigits: 2 })}</div>
                   </div>
                   <div>
-                    <div style={{ color: '#3a4a5a', marginBottom: 2 }}>Total facturado (productos)</div>
+                    <div style={{ color: '#7dd3fc', marginBottom: 2 }}>Total facturado (productos)</div>
                     <div style={{ color: '#7eb8f7', fontWeight: 700 }}>${resultado.cuadre_almacen.facturado.toLocaleString('es-CU', { minimumFractionDigits: 2 })}</div>
                   </div>
                   <div>
-                    <div style={{ color: '#3a4a5a', marginBottom: 2 }}>Desglose F1 + F2</div>
+                    <div style={{ color: '#7dd3fc', marginBottom: 2 }}>Desglose F1 + F2</div>
                     <div style={{ color: '#8899bb', fontSize: 11 }}>
                       F1: ${resultado.cuadre_almacen.fase1_productos.toLocaleString('es-CU', { minimumFractionDigits: 2 })} &nbsp;+&nbsp;
                       F2: ${resultado.cuadre_almacen.fase2_efectivo.toLocaleString('es-CU', { minimumFractionDigits: 2 })}
@@ -227,11 +227,11 @@ export default function Distribucion() {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, fontSize: 12 }}>
                   <div>
-                    <div style={{ color: '#3a4a5a', marginBottom: 2 }}>Minorista esperado</div>
+                    <div style={{ color: '#7dd3fc', marginBottom: 2 }}>Minorista esperado</div>
                     <div style={{ color: '#f2c94c', fontWeight: 700 }}>${resultado.cuadre_pv.esperado.toLocaleString('es-CU', { minimumFractionDigits: 2 })}</div>
                   </div>
                   <div>
-                    <div style={{ color: '#3a4a5a', marginBottom: 2 }}>Total resúmenes generados</div>
+                    <div style={{ color: '#7dd3fc', marginBottom: 2 }}>Total resúmenes generados</div>
                     <div style={{ color: '#f2c94c', fontWeight: 700 }}>${resultado.cuadre_pv.generado.toLocaleString('es-CU', { minimumFractionDigits: 2 })}</div>
                   </div>
                 </div>
@@ -245,7 +245,7 @@ export default function Distribucion() {
                   <div style={{ fontSize: 12, color: '#8899bb', fontWeight: 600, marginBottom: 3 }}>
                     🔄 Recalcular resúmenes de Puntos de Venta
                   </div>
-                  <div style={{ fontSize: 11, color: '#3a4a5a', maxWidth: 460 }}>
+                  <div style={{ fontSize: 11, color: '#7dd3fc', maxWidth: 460 }}>
                     Regenera solo los resúmenes PV corrigiendo la distribución de transferencias. Las facturas del Almacén Central no se modifican.
                   </div>
                 </div>
@@ -288,19 +288,19 @@ export default function Distribucion() {
                   fontSize: 12,
                 }}>
                   <div>
-                    <div style={{ color: '#3a4a5a', marginBottom: 3 }}>Total vendido PV</div>
+                    <div style={{ color: '#7dd3fc', marginBottom: 3 }}>Total vendido PV</div>
                     <div style={{ color: '#f2c94c', fontWeight: 700, fontSize: 14 }}>
                       ${recalcResult.totales.total_vendido.toLocaleString('es-CU', { minimumFractionDigits: 2 })}
                     </div>
                   </div>
                   <div>
-                    <div style={{ color: '#3a4a5a', marginBottom: 3 }}>Por transferencia</div>
+                    <div style={{ color: '#7dd3fc', marginBottom: 3 }}>Por transferencia</div>
                     <div style={{ color: '#bb87fc', fontWeight: 700, fontSize: 14 }}>
                       ${recalcResult.totales.total_transferencia.toLocaleString('es-CU', { minimumFractionDigits: 2 })}
                     </div>
                   </div>
                   <div>
-                    <div style={{ color: '#3a4a5a', marginBottom: 3 }}>En efectivo</div>
+                    <div style={{ color: '#7dd3fc', marginBottom: 3 }}>En efectivo</div>
                     <div style={{ color: '#6fcf97', fontWeight: 700, fontSize: 14 }}>
                       ${recalcResult.totales.total_efectivo.toLocaleString('es-CU', { minimumFractionDigits: 2 })}
                     </div>
@@ -344,7 +344,7 @@ export default function Distribucion() {
                 }}
               />
             </div>
-            <div style={{ fontSize: 11, color: '#3a4a5a', marginTop: 5 }}>
+            <div style={{ fontSize: 11, color: '#7dd3fc', marginTop: 5 }}>
               CR &lt; ${form.umbral_minorista.toLocaleString()} → Puntos de Venta &nbsp;|&nbsp; CR ≥ ${form.umbral_minorista.toLocaleString()} → Almacén Central
             </div>
           </div>
@@ -454,7 +454,7 @@ export default function Distribucion() {
 
         {/* Selector de destinos por producto */}
         {(!form.fecha_inicio || !form.fecha_fin) ? (
-          <div style={{ fontSize: 12, color: '#3a4a5a', fontStyle: 'italic', marginBottom: 20, paddingLeft: 4 }}>
+          <div style={{ fontSize: 12, color: '#7dd3fc', fontStyle: 'italic', marginBottom: 20, paddingLeft: 4 }}>
             📅 Completá el rango de fechas para ver los productos disponibles en ese período.
           </div>
         ) : productos.length === 0 ? (
@@ -470,8 +470,8 @@ export default function Distribucion() {
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid #1e2530', background: '#060810' }}>
-                    <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: 11, color: '#3a4a5a', letterSpacing: 0.8, textTransform: 'uppercase' }}>Producto</th>
-                    <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: 11, color: '#3a4a5a', letterSpacing: 0.8, textTransform: 'uppercase' }}>Destino</th>
+                    <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: 11, color: '#7dd3fc', letterSpacing: 0.8, textTransform: 'uppercase' }}>Producto</th>
+                    <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: 11, color: '#7dd3fc', letterSpacing: 0.8, textTransform: 'uppercase' }}>Destino</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -483,7 +483,7 @@ export default function Distribucion() {
                       <tr key={p.id} style={{ borderBottom: i < productos.length - 1 ? '1px solid #0e1117' : 'none' }}>
                         <td style={{ padding: '9px 14px' }}>
                           <span style={{ color: '#e8f0fe', fontWeight: 600 }}>{p.producto}</span>
-                          <span style={{ color: '#3a4a5a', fontSize: 11, marginLeft: 8 }}>{p.codigo}</span>
+                          <span style={{ color: '#7dd3fc', fontSize: 11, marginLeft: 8 }}>{p.codigo}</span>
                           {esOtros && (
                             <span style={{ marginLeft: 8, fontSize: 10, background: 'rgba(187,135,252,0.12)', color: '#bb87fc', border: '1px solid rgba(187,135,252,0.25)', borderRadius: 4, padding: '1px 6px', fontWeight: 700 }}>
                               📦 auto→PV
@@ -555,7 +555,7 @@ export default function Distribucion() {
               <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(preview.totales_por_punto.length, 4)}, 1fr)`, gap: 12 }}>
                 {preview.totales_por_punto.map(pv => (
                   <div key={pv.punto_venta_id} style={{ background: '#1a2a2a', border: '1px solid #2a4040', borderRadius: 8, padding: '12px 16px' }}>
-                    <div style={{ fontSize: 11, color: '#3a4a5a', marginBottom: 4 }}>{pv.punto_venta_nombre}</div>
+                    <div style={{ fontSize: 11, color: '#7dd3fc', marginBottom: 4 }}>{pv.punto_venta_nombre}</div>
                     <div style={{ fontSize: 18, fontWeight: 700, color: '#f2c94c', marginBottom: 2 }}>${fmt(pv.total)}</div>
                     <div style={{ fontSize: 12, color: '#8899bb' }}>{pv.porcentaje}% del minorista</div>
                   </div>
@@ -569,14 +569,14 @@ export default function Distribucion() {
   <h3 style={{ fontSize: 14, color: '#bb87fc', marginBottom: 14, fontFamily: "'Syne', sans-serif" }}>Transferencias CR Disponibles en el Período</h3>
   <div style={{ display: 'flex', gap: 14, marginBottom: 14 }}>
     <div style={{ background: '#1a2a2a', border: '1px solid #2a4040', borderRadius: 8, padding: '10px 16px' }}>
-      <div style={{ fontSize: 11, color: '#3a4a5a', marginBottom: 4 }}>CR &lt; ${(preview.config.umbral_minorista || 20000).toLocaleString()} → Puntos de Venta</div>
+      <div style={{ fontSize: 11, color: '#7dd3fc', marginBottom: 4 }}>CR &lt; ${(preview.config.umbral_minorista || 20000).toLocaleString()} → Puntos de Venta</div>
       <div style={{ fontSize: 18, fontWeight: 700, color: '#f2c94c' }}>
         {preview.transferencias.todas.filter(t => parseFloat(t.importe) < (preview.config.umbral_minorista || 20000)).length} transf. / 
         ${fmt(preview.transferencias.todas.filter(t => parseFloat(t.importe) < (preview.config.umbral_minorista || 20000)).reduce((s, t) => s + parseFloat(t.importe), 0))}
       </div>
     </div>
     <div style={{ background: '#1a2a3a', border: '1px solid #2a4060', borderRadius: 8, padding: '10px 16px' }}>
-      <div style={{ fontSize: 11, color: '#3a4a5a', marginBottom: 4 }}>CR ≥ ${(preview.config.umbral_minorista || 20000).toLocaleString()} → Almacén Central</div>
+      <div style={{ fontSize: 11, color: '#7dd3fc', marginBottom: 4 }}>CR ≥ ${(preview.config.umbral_minorista || 20000).toLocaleString()} → Almacén Central</div>
       <div style={{ fontSize: 18, fontWeight: 700, color: '#7eb8f7' }}>
         {preview.transferencias.todas.filter(t => parseFloat(t.importe) >= (preview.config.umbral_minorista || 20000)).length} transf. / 
         ${fmt(preview.transferencias.todas.filter(t => parseFloat(t.importe) >= (preview.config.umbral_minorista || 20000)).reduce((s, t) => s + parseFloat(t.importe), 0))}
@@ -593,7 +593,7 @@ export default function Distribucion() {
                 <thead>
                   <tr style={{ borderBottom: '2px solid #1e2530' }}>
                     {['Producto', 'Destino', 'Almacén Central', 'Valor Mayorista', 'Puntos de Venta (UM min)', 'Valor Minorista'].map(h => (
-                      <th key={h} style={{ padding: '10px 12px', textAlign: 'left', color: '#3a4a5a', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>{h}</th>
+                      <th key={h} style={{ padding: '10px 12px', textAlign: 'left', color: '#7dd3fc', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -607,7 +607,7 @@ export default function Distribucion() {
                       <tr key={p.id} style={{ borderBottom: '1px solid #0e1117' }}>
                         <td style={{ padding: '11px 12px' }}>
                           <div style={{ color: '#e8f0fe', fontWeight: 600 }}>{p.producto}</div>
-                          <div style={{ fontSize: 11, color: '#3a4a5a' }}>{p.codigo}</div>
+                          <div style={{ fontSize: 11, color: '#7dd3fc' }}>{p.codigo}</div>
                         </td>
                         <td style={{ padding: '11px 12px' }}>
                           <span style={{ background: destLabel.bg, color: destLabel.color, borderRadius: 5, padding: '3px 10px', fontSize: 11, fontWeight: 700 }}>
@@ -618,13 +618,13 @@ export default function Distribucion() {
                           {p.fmtRango ? (
                             <>
                               <span style={{ color: '#f2c94c', fontWeight: 700 }}>{p.cajas_mayorista} piezas</span>
-                              <span style={{ color: '#3a4a5a', fontSize: 11 }}> ({fmt(p.para_mayorista)} {p.um_minorista})</span>
+                              <span style={{ color: '#7dd3fc', fontSize: 11 }}> ({fmt(p.para_mayorista)} {p.um_minorista})</span>
                               <div style={{ fontSize: 10, color: '#eb8c34', marginTop: 2 }}>★ rango {p.pesoMin}–{p.pesoMax} {p.um_minorista}</div>
                             </>
                           ) : (
                             <>
                               <span style={{ color: '#7eb8f7', fontWeight: 700 }}>{p.cajas_mayorista} cajas</span>
-                              <span style={{ color: '#3a4a5a', fontSize: 11 }}> ({fmt(p.para_mayorista)} {p.um_minorista})</span>
+                              <span style={{ color: '#7dd3fc', fontSize: 11 }}> ({fmt(p.para_mayorista)} {p.um_minorista})</span>
                             </>
                           )}
                         </td>

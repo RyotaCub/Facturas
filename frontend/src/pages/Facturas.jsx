@@ -388,7 +388,7 @@ export default function Facturas() {
     fontFamily: 'inherit', fontWeight: 600,
     border: active ? '1px solid #2563eb' : '1px solid #1e2530',
     background: active ? '#1a2540' : 'none',
-    color: active ? '#7eb8f7' : '#3a4a5a',
+    color: active ? '#7eb8f7' : '#7dd3fc',
   });
 
   return (
@@ -398,7 +398,7 @@ export default function Facturas() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1 style={{ fontSize: 26, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#e8f0fe' }}>Facturas Mayoristas</h1>
-          <p style={{ color: '#3a4a5a', fontSize: 13, marginTop: 4 }}>Almacén Central — comprobantes de venta</p>
+          <p style={{ color: '#7dd3fc', fontSize: 13, marginTop: 4 }}>Almacén Central — comprobantes de venta</p>
         </div>
 
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -435,7 +435,7 @@ export default function Facturas() {
                   borderRadius: 12, padding: 8, zIndex: 1000, minWidth: 220,
                   boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
                 }}>
-                  <div style={{ fontSize: 10, color: '#3a4a5a', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700, padding: '4px 10px 8px' }}>
+                  <div style={{ fontSize: 10, color: '#7dd3fc', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700, padding: '4px 10px 8px' }}>
                     Seleccionar vendedor
                   </div>
                   {vendedoresUnicos.map(v => {
@@ -500,7 +500,7 @@ export default function Facturas() {
               display: 'flex', alignItems: 'center', gap: 8,
               background: printLoading ? '#141920' : '#1a2a3a',
               border: '1px solid #2a5080', borderRadius: 10,
-              padding: '10px 20px', color: printLoading ? '#3a4a5a' : '#7eb8f7',
+              padding: '10px 20px', color: printLoading ? '#7dd3fc' : '#7eb8f7',
               cursor: printLoading || !pagination.total ? 'not-allowed' : 'pointer',
               fontSize: 13, fontFamily: 'inherit', fontWeight: 700,
               transition: 'all 0.15s',
@@ -530,7 +530,7 @@ export default function Facturas() {
             <div style={{ fontSize: 11, color: '#8899bb', textTransform: 'uppercase', letterSpacing: 0.9, fontWeight: 700 }}>
               📦 Stock facturado — {totalesPorProducto.length} producto{totalesPorProducto.length !== 1 ? 's' : ''}
             </div>
-            <span style={{ fontSize: 13, color: '#3a4a5a', transition: 'transform 0.2s', display: 'inline-block', transform: stockCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)' }}>▼</span>
+            <span style={{ fontSize: 13, color: '#7dd3fc', transition: 'transform 0.2s', display: 'inline-block', transform: stockCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)' }}>▼</span>
           </div>
           {!stockCollapsed && (
           <div style={{ marginTop: 12 }}>
@@ -540,7 +540,7 @@ export default function Facturas() {
               <thead>
                 <tr style={{ borderBottom: '1px solid #1e2530' }}>
                   {['Producto', 'Total cantidad', 'UM', 'Total importe', 'Facturas'].map(h => (
-                    <th key={h} style={{ padding: '6px 10px', textAlign: h === 'Total importe' || h === 'Total cantidad' ? 'right' : 'left', color: '#3a4a5a', fontSize: 10, letterSpacing: 0.8, textTransform: 'uppercase', fontWeight: 600 }}>{h}</th>
+                    <th key={h} style={{ padding: '6px 10px', textAlign: h === 'Total importe' || h === 'Total cantidad' ? 'right' : 'left', color: '#7dd3fc', fontSize: 10, letterSpacing: 0.8, textTransform: 'uppercase', fontWeight: 600 }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -560,11 +560,11 @@ export default function Facturas() {
                       >
                         <td style={{ padding: '8px 10px' }}>
                           <span style={{ color: seleccionado ? '#7eb8f7' : '#e8f0fe', fontWeight: 600 }}>{p.producto}</span>
-                          {p.codigo && <span style={{ color: '#3a4a5a', fontSize: 11, marginLeft: 6 }}>{p.codigo}</span>}
+                          {p.codigo && <span style={{ color: '#7dd3fc', fontSize: 11, marginLeft: 6 }}>{p.codigo}</span>}
                           <span style={{ marginLeft: 8, fontSize: 11, color: seleccionado ? '#4a7abf' : '#2a3a4a' }}>{seleccionado ? '▲' : '▼'}</span>
                         </td>
                         <td style={{ padding: '8px 10px', textAlign: 'right', color: '#f2c94c', fontWeight: 700 }}>{fmt(p.cantidad)}</td>
-                        <td style={{ padding: '8px 10px', color: '#3a4a5a', fontSize: 11 }}>{p.um}</td>
+                        <td style={{ padding: '8px 10px', color: '#7dd3fc', fontSize: 11 }}>{p.um}</td>
                         <td style={{ padding: '8px 10px', textAlign: 'right', color: '#7eb8f7', fontWeight: 700 }}>${fmt(p.importe)}</td>
                         <td style={{ padding: '8px 10px', textAlign: 'center' }}>
                           <span style={{ background: seleccionado ? '#1a3050' : '#1a2030', border: `1px solid ${seleccionado ? '#2a5080' : '#2a3040'}`, borderRadius: 5, padding: '2px 8px', fontSize: 11, color: seleccionado ? '#7eb8f7' : '#8899bb' }}>{p.facturas}</span>
@@ -582,7 +582,7 @@ export default function Facturas() {
                                   <div key={di} style={{ background: '#0a0f18', border: '1px solid #1a2535', borderRadius: 8, padding: '8px 12px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
                                       <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#7eb8f7', fontSize: 13 }}>#{d.consecutivo}</span>
-                                      <span style={{ fontSize: 11, color: '#3a4a5a' }}>{fmtDate(d.fecha)}</span>
+                                      <span style={{ fontSize: 11, color: '#7dd3fc' }}>{fmtDate(d.fecha)}</span>
                                     </div>
                                     <div style={{ fontSize: 12, color: '#f2c94c', fontWeight: 700 }}>{fmt(d.itemCantidad)} {d.um}</div>
                                     <div style={{ fontSize: 11, color: '#6fcf97', fontWeight: 700, marginTop: 2 }}>${fmt(d.itemImporte)}</div>
@@ -599,7 +599,7 @@ export default function Facturas() {
               </tbody>
               <tfoot>
                 <tr style={{ borderTop: '2px solid #1e2530' }}>
-                  <td colSpan={3} style={{ padding: '8px 10px', color: '#3a4a5a', fontSize: 11, fontWeight: 700 }}>TOTAL GENERAL</td>
+                  <td colSpan={3} style={{ padding: '8px 10px', color: '#7dd3fc', fontSize: 11, fontWeight: 700 }}>TOTAL GENERAL</td>
                   <td style={{ padding: '8px 10px', textAlign: 'right', color: '#6fcf97', fontWeight: 800, fontSize: 14 }}>${fmt(totalGen)}</td>
                   <td />
                 </tr>
@@ -701,7 +701,7 @@ export default function Facturas() {
                     {f.ref_transferencia && <Badge color="purple">Transf: {f.ref_transferencia}</Badge>}
                     {f.es_fusion && <Badge color="orange">🔀 Fusión</Badge>}
                   </div>
-                  <div style={{ fontSize: 12, color: '#3a4a5a' }}>
+                  <div style={{ fontSize: 12, color: '#7dd3fc' }}>
                     Cliente: <span style={{ color: '#8899bb' }}>{f.cliente_nombre}</span>
                     {' · '}CI: <span style={{ color: '#8899bb' }}>{f.cliente_ci}</span>
                     {' · '}Vendedor: <span style={{ color: '#8899bb' }}>{f.vendedor_nombre}</span>
@@ -754,10 +754,10 @@ export default function Facturas() {
                         <div style={{ fontSize: 12, color: '#eb8c34', fontWeight: 700, marginBottom: 2 }}>
                           {item.num_piezas} piezas · {fmt(item.cantidad)} {item.um} total
                         </div>
-                        <div style={{ fontSize: 11, color: '#3a4a5a' }}>${fmt(item.precio)}/{item.um}</div>
+                        <div style={{ fontSize: 11, color: '#7dd3fc' }}>${fmt(item.precio)}/{item.um}</div>
                       </>
                     ) : (
-                      <div style={{ fontSize: 11, color: '#3a4a5a' }}>{item.cantidad} {item.um} × ${fmt(item.precio)}</div>
+                      <div style={{ fontSize: 11, color: '#7dd3fc' }}>{item.cantidad} {item.um} × ${fmt(item.precio)}</div>
                     )}
                     <div style={{ fontSize: 14, fontWeight: 700, color: '#f2c94c', marginTop: 4 }}>${fmt(item.importe)}</div>
                   </div>
@@ -801,7 +801,7 @@ export default function Facturas() {
                 style={{ background: page === 1 ? '#0e1117' : '#141920', border: '1px solid #1e2530', borderRadius: 8, padding: '7px 16px', color: page === 1 ? '#2a3a4a' : '#7eb8f7', cursor: page === 1 ? 'not-allowed' : 'pointer', fontSize: 13, fontFamily: 'inherit', fontWeight: 600 }}>
                 « Anterior
               </button>
-              <span style={{ color: '#3a4a5a', fontSize: 13 }}>
+              <span style={{ color: '#7dd3fc', fontSize: 13 }}>
                 Página <strong style={{ color: '#e8f0fe' }}>{page}</strong> de <strong style={{ color: '#e8f0fe' }}>{pagination.totalPages}</strong>
                 <span style={{ marginLeft: 10, color: '#2a3a4a' }}>({pagination.total} facturas)</span>
               </span>
@@ -826,7 +826,7 @@ export default function Facturas() {
 
         {mostrarAnuladas && (
           <div style={{ marginTop: 16 }}>
-            <p style={{ color: '#3a4a5a', fontSize: 12, marginBottom: 12 }}>
+            <p style={{ color: '#7dd3fc', fontSize: 12, marginBottom: 12 }}>
               Las facturas anuladas mantienen su registro contable. El inventario fue revertido en el momento de la anulación.
             </p>
             {anuladas.length === 0 ? (

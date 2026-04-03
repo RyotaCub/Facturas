@@ -4,7 +4,7 @@ export const T = {
   card:   '#0e1117',
   border: '#1e2530',
   text:   '#e8f0fe',
-  muted:  '#3a4a5a',
+  muted:  '#7dd3fc',
   accent: '#7eb8f7',
   green:  '#6fcf97',
   red:    '#eb5757',

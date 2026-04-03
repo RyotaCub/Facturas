@@ -25,14 +25,14 @@ function ResetModal({ onConfirm, onCancel, resetting }) {
         <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: 20, color: '#eb5757', marginBottom: 8 }}>
           🔄 Resetear Período
         </h2>
-        <p style={{ color: '#3a4a5a', fontSize: 13, marginBottom: 24, lineHeight: 1.6 }}>
+        <p style={{ color: '#7dd3fc', fontSize: 13, marginBottom: 24, lineHeight: 1.6 }}>
           Se eliminarán <strong style={{ color: '#e8f0fe' }}>todas las facturas, resúmenes y períodos</strong> dentro
           del rango seleccionado. Las transferencias quedarán libres y los productos se reactivarán.
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 20 }}>
           <div>
-            <label style={{ display: 'block', fontSize: 11, color: '#3a4a5a', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
+            <label style={{ display: 'block', fontSize: 11, color: '#7dd3fc', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
               Fecha Inicio
             </label>
             <input
@@ -48,7 +48,7 @@ function ResetModal({ onConfirm, onCancel, resetting }) {
             />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, color: '#3a4a5a', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
+            <label style={{ display: 'block', fontSize: 11, color: '#7dd3fc', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
               Fecha Fin
             </label>
             <input
@@ -72,7 +72,7 @@ function ResetModal({ onConfirm, onCancel, resetting }) {
         )}
 
         <div style={{ marginBottom: 24 }}>
-          <label style={{ display: 'block', fontSize: 11, color: '#3a4a5a', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
+          <label style={{ display: 'block', fontSize: 11, color: '#7dd3fc', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
             Escribe <strong style={{ color: '#eb5757' }}>RESETEAR</strong> para confirmar
           </label>
           <input
@@ -168,7 +168,7 @@ export default function Dashboard() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
         <div>
           <h1 style={{ fontSize: 28, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#e8f0fe' }}>Dashboard</h1>
-          <p style={{ color: '#3a4a5a', fontSize: 13, marginTop: 4 }}>{new Date().toLocaleDateString('es-CU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p style={{ color: '#7dd3fc', fontSize: 13, marginTop: 4 }}>{new Date().toLocaleDateString('es-CU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
         </div>
         <Btn onClick={() => setShowResetModal(true)} variant="danger" disabled={resetting}>
           🔄 Resetear Sistema
@@ -190,17 +190,17 @@ export default function Dashboard() {
         <Card>
           <h3 style={{ fontSize: 14, color: '#7eb8f7', marginBottom: 16, fontFamily: "'Syne', sans-serif" }}>Últimos Períodos</h3>
           {periodos.length === 0 ? (
-            <p style={{ color: '#3a4a5a', fontSize: 13 }}>No hay períodos procesados aún.</p>
+            <p style={{ color: '#7dd3fc', fontSize: 13 }}>No hay períodos procesados aún.</p>
           ) : (
             periodos.slice(0, 5).map(p => (
               <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #1e2530' }}>
                 <div>
                   <div style={{ fontSize: 13, color: '#e8f0fe', fontWeight: 600 }}>{p.nombre}</div>
-                  <div style={{ fontSize: 11, color: '#3a4a5a', marginTop: 2 }}>{fmtDate(p.fecha_inicio)} — {fmtDate(p.fecha_fin)}</div>
+                  <div style={{ fontSize: 11, color: '#7dd3fc', marginTop: 2 }}>{fmtDate(p.fecha_inicio)} — {fmtDate(p.fecha_fin)}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontSize: 13, color: '#6fcf97', fontWeight: 700 }}>${fmt(parseFloat(p.total_mayorista || 0) + parseFloat(p.total_minorista || 0))}</div>
-                  <div style={{ fontSize: 11, color: '#3a4a5a' }}>{p.num_facturas} fact · {p.num_resumenes} res</div>
+                  <div style={{ fontSize: 11, color: '#7dd3fc' }}>{p.num_facturas} fact · {p.num_resumenes} res</div>
                 </div>
               </div>
             ))
@@ -211,17 +211,17 @@ export default function Dashboard() {
         <Card>
           <h3 style={{ fontSize: 14, color: '#f2c94c', marginBottom: 16, fontFamily: "'Syne', sans-serif" }}>Productos Activos</h3>
           {activos.length === 0 ? (
-            <p style={{ color: '#3a4a5a', fontSize: 13 }}>No hay productos activos.</p>
+            <p style={{ color: '#7dd3fc', fontSize: 13 }}>No hay productos activos.</p>
           ) : (
             activos.slice(0, 6).map(p => (
               <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', borderBottom: '1px solid #1e2530' }}>
                 <div>
                   <div style={{ fontSize: 13, color: '#e8f0fe', fontWeight: 600 }}>{p.producto}</div>
-                  <div style={{ fontSize: 11, color: '#3a4a5a' }}>{p.codigo}</div>
+                  <div style={{ fontSize: 11, color: '#7dd3fc' }}>{p.codigo}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontSize: 13, color: '#6fcf97', fontWeight: 700 }}>{fmt(p.disponible_um_minorista)} {p.um_minorista}</div>
-                  <div style={{ fontSize: 11, color: '#3a4a5a' }}>${fmt(p.importe)}/{p.um_minorista}</div>
+                  <div style={{ fontSize: 11, color: '#7dd3fc' }}>${fmt(p.importe)}/{p.um_minorista}</div>
                 </div>
               </div>
             ))
@@ -232,7 +232,7 @@ export default function Dashboard() {
       {sinFechas.length > 0 && (
         <Card style={{ borderColor: '#3a2a1a' }}>
           <h3 style={{ fontSize: 13, color: '#f2c94c', marginBottom: 12 }}>⚠ Productos sin fechas ({sinFechas.length})</h3>
-          <p style={{ color: '#3a4a5a', fontSize: 12, marginBottom: 12 }}>
+          <p style={{ color: '#7dd3fc', fontSize: 12, marginBottom: 12 }}>
             Estos productos no podrán usarse en distribuciones hasta que se configuren las fechas.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>

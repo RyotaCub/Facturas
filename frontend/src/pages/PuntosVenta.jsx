@@ -31,7 +31,7 @@ function CategoriaSelector({ selected, onChange, small = false }) {
               fontWeight: 700,
               background: active ? opt.bg : '#0a0d12',
               border: `1.5px solid ${active ? opt.border : '#1e2530'}`,
-              color: active ? opt.color : '#3a4a5a',
+              color: active ? opt.color : '#7dd3fc',
               transition: 'all 0.15s',
             }}>
             {opt.icon} {small ? opt.value.charAt(0).toUpperCase() + opt.value.slice(1) : opt.label}
@@ -109,7 +109,7 @@ export default function PuntosVenta() {
   const porcentajeValido = useMemo(() => totalPorcentaje === 100, [totalPorcentaje]);
   const disponible       = useMemo(() => 100 - totalPorcentaje, [totalPorcentaje]);
 
-  if (loading) return <div style={{ padding: 40, textAlign: 'center', color: '#3a4a5a' }}>Cargando...</div>;
+  if (loading) return <div style={{ padding: 40, textAlign: 'center', color: '#7dd3fc' }}>Cargando...</div>;
 
   return (
     <div className="fade-in">
@@ -117,7 +117,7 @@ export default function PuntosVenta() {
         <h1 style={{ fontSize: 26, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#e8f0fe' }}>
           Puntos de Venta Minoristas
         </h1>
-        <p style={{ color: '#3a4a5a', fontSize: 13, marginTop: 4 }}>
+        <p style={{ color: '#7dd3fc', fontSize: 13, marginTop: 4 }}>
           Configura los puntos de venta y sus porcentajes de distribución
         </p>
       </div>
@@ -171,7 +171,7 @@ export default function PuntosVenta() {
             selected={form.categorias}
             onChange={cats => setForm(p => ({ ...p, categorias: cats }))}
           />
-          <div style={{ marginTop: 6, fontSize: 11, color: '#3a4a5a' }}>
+          <div style={{ marginTop: 6, fontSize: 11, color: '#7dd3fc' }}>
             Este PV solo recibirá productos de las categorías seleccionadas.
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function PuntosVenta() {
         </h3>
         
         {puntosVenta.length === 0 ? (
-          <div style={{ textAlign: 'center', color: '#3a4a5a', padding: '40px 20px' }}>
+          <div style={{ textAlign: 'center', color: '#7dd3fc', padding: '40px 20px' }}>
             No hay puntos de venta configurados
           </div>
         ) : (
@@ -192,19 +192,19 @@ export default function PuntosVenta() {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ borderBottom: '2px solid #1e2530' }}>
-                  <th style={{ padding: '10px 12px', textAlign: 'left', color: '#3a4a5a', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', color: '#7dd3fc', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
                     Nombre
                   </th>
-                  <th style={{ padding: '10px 12px', textAlign: 'center', color: '#3a4a5a', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
+                  <th style={{ padding: '10px 12px', textAlign: 'center', color: '#7dd3fc', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
                     Porcentaje
                   </th>
-                  <th style={{ padding: '10px 12px', textAlign: 'left', color: '#3a4a5a', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', color: '#7dd3fc', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
                     Categorías
                   </th>
-                  <th style={{ padding: '10px 12px', textAlign: 'center', color: '#3a4a5a', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
+                  <th style={{ padding: '10px 12px', textAlign: 'center', color: '#7dd3fc', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
                     Estado
                   </th>
-                  <th style={{ padding: '10px 12px', textAlign: 'right', color: '#3a4a5a', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
+                  <th style={{ padding: '10px 12px', textAlign: 'right', color: '#7dd3fc', fontSize: 11, letterSpacing: 0.8, textTransform: 'uppercase' }}>
                     Acciones
                   </th>
                 </tr>
@@ -324,19 +324,19 @@ export default function PuntosVenta() {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: 11, color: '#3a4a5a', marginBottom: 4 }}>PUNTOS ACTIVOS</div>
+              <div style={{ fontSize: 11, color: '#7dd3fc', marginBottom: 4 }}>PUNTOS ACTIVOS</div>
               <div style={{ fontSize: 20, fontWeight: 800, color: '#e8f0fe', fontFamily: "'Syne', sans-serif" }}>
                 {puntosActivos.length}
               </div>
             </div>
             <div>
-              <div style={{ fontSize: 11, color: '#3a4a5a', marginBottom: 4 }}>PORCENTAJE ASIGNADO</div>
+              <div style={{ fontSize: 11, color: '#7dd3fc', marginBottom: 4 }}>PORCENTAJE ASIGNADO</div>
               <div style={{ fontSize: 20, fontWeight: 800, color: porcentajeValido ? '#6fcf97' : '#f2c94c', fontFamily: "'Syne', sans-serif" }}>
                 {totalPorcentaje}%
               </div>
             </div>
             <div>
-              <div style={{ fontSize: 11, color: '#3a4a5a', marginBottom: 4 }}>DISPONIBLE</div>
+              <div style={{ fontSize: 11, color: '#7dd3fc', marginBottom: 4 }}>DISPONIBLE</div>
               <div style={{ fontSize: 20, fontWeight: 800, color: disponible === 0 ? '#6fcf97' : '#8899bb', fontFamily: "'Syne', sans-serif" }}>
                 {disponible}%
               </div>

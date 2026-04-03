@@ -993,7 +993,7 @@ export default function Transferencias() {
                           </span>
                           📅 {label}
                         </span>
-                        <span style={{ fontSize: 11, color: '#3a4a5a' }}>
+                        <span style={{ fontSize: 11, color: '#7dd3fc' }}>
                           {items.length} op{items.length !== 1 ? 's' : ''}
                         </span>
                         {totalCR > 0 && (
@@ -1049,13 +1049,13 @@ export default function Transferencias() {
                             </div>
                           </td>
                         )}
-                        <Td color={C.muted}>{fmtDate(t.fecha)}</Td>
+                        <Td color="#7dd3fc">{fmtDate(t.fecha)}</Td>
                         <Td color={C.accent}><strong>{t.ref_origen}</strong></Td>
-                        <Td color="#8899bb">{t.prefijo}</Td>
+                        <Td color="#a78bfa">{t.prefijo}</Td>
                         <Td><Badge color={t.tipo === 'CR' ? 'green' : 'red'}>{t.tipo}</Badge></Td>
                         <Td align="right" color={t.tipo === 'CR' ? C.green : C.red}><strong>${fmt(t.importe)}</strong></Td>
                         <Td><NombreCell id={t.id} value={t.nombre} onSaved={handleSaved} /></Td>
-                        <Td color={C.muted}>{t.ci || '—'}</Td>
+                        <Td color="#fcd34d">{t.ci || '—'}</Td>
                         <Td>
                           {t.tipo === 'CR'
                             ? <Badge color={t.usada ? 'gray' : 'green'}>{t.usada ? 'Usada' : 'Disponible'}</Badge>

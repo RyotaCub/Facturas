@@ -193,7 +193,7 @@ function ResumenProductos({ periodo, onClose }) {
     fontWeight: 700,
     border: active ? '1px solid #2563eb' : '1px solid #1e2530',
     background: active ? '#1a2540' : 'none',
-    color: active ? '#7eb8f7' : '#3a4a5a',
+    color: active ? '#7eb8f7' : '#7dd3fc',
     transition: 'all 0.15s',
   });
 
@@ -380,7 +380,7 @@ function ResumenProductos({ periodo, onClose }) {
                 {periodo.estado}
               </Badge>
             </div>
-            <p style={{ color: '#3a4a5a', fontSize: 12, margin: 0 }}>
+            <p style={{ color: '#7dd3fc', fontSize: 12, margin: 0 }}>
               {fmtDate(periodo.fecha_inicio)} — {fmtDate(periodo.fecha_fin)}
               {' · '}{periodo.pct_minorista}% minorista
             </p>
@@ -445,7 +445,7 @@ function ResumenProductos({ periodo, onClose }) {
                   background: '#0e1117', border: '1px solid #1e2530',
                   borderRadius: 10, padding: '12px 14px',
                 }}>
-                  <div style={{ fontSize: 10, color: '#3a4a5a', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4 }}>
+                  <div style={{ fontSize: 10, color: '#7dd3fc', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4 }}>
                     {s.label}
                   </div>
                   <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, color: s.color }}>
@@ -474,7 +474,7 @@ function ResumenProductos({ periodo, onClose }) {
               }}>
                 <div style={{ fontSize: 22, flexShrink: 0 }}>🏦</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 10, color: '#3a4a5a', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4, fontWeight: 700 }}>
+                  <div style={{ fontSize: 10, color: '#7dd3fc', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4, fontWeight: 700 }}>
                     Transferencias — Almacén (Mayorista)
                   </div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
@@ -500,7 +500,7 @@ function ResumenProductos({ periodo, onClose }) {
               }}>
                 <div style={{ fontSize: 22, flexShrink: 0 }}>🏪</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 10, color: '#3a4a5a', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4, fontWeight: 700 }}>
+                  <div style={{ fontSize: 10, color: '#7dd3fc', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4, fontWeight: 700 }}>
                     Transferencias — Puntos de Venta (Minorista)
                   </div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
@@ -527,7 +527,7 @@ function ResumenProductos({ periodo, onClose }) {
                 flexShrink: 0,
               }}>
                 <div style={{
-                  fontSize: 10, color: '#3a4a5a', textTransform: 'uppercase',
+                  fontSize: 10, color: '#7dd3fc', textTransform: 'uppercase',
                   letterSpacing: 0.8, fontWeight: 700, marginBottom: 10,
                 }}>
                   🏦 Transferencias BANDEC por Titular
@@ -568,7 +568,7 @@ function ResumenProductos({ periodo, onClose }) {
                     </tbody>
                     <tfoot>
                       <tr style={{ borderTop: '2px solid #1e2530', background: '#0a0d12' }}>
-                        <td style={{ padding: '8px 12px', color: '#3a4a5a', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                        <td style={{ padding: '8px 12px', color: '#7dd3fc', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8 }}>
                           TOTAL
                         </td>
                         <td style={{ padding: '8px 12px', textAlign: 'right', color: '#4a8abf', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>
@@ -648,7 +648,7 @@ function ResumenProductos({ periodo, onClose }) {
                         </td>
                         <td style={{ padding: '10px 12px' }}>
                           {item.codigo && (
-                            <span style={{ color: '#3a4a5a', marginRight: 6 }}>{item.codigo}</span>
+                            <span style={{ color: '#7dd3fc', marginRight: 6 }}>{item.codigo}</span>
                           )}
                           <span style={{ color: '#2a3a4a', fontSize: 11 }}>{item.um}</span>
                         </td>
@@ -665,13 +665,13 @@ function ResumenProductos({ periodo, onClose }) {
                         {tab === 'mayorista' && <>
                           <td style={tdNum('#a0c0e0')}>{fmt(item.cantidad)}</td>
                           <td style={tdNum('#7eb8f7', true)}>${fmt(item.importe)}</td>
-                          <td style={tdNum('#3a4a5a')}>{item.facturas}</td>
+                          <td style={tdNum('#7dd3fc')}>{item.facturas}</td>
                         </>}
 
                         {tab === 'minorista' && <>
                           <td style={tdNum('#e0c080')}>{fmt(item.cantidad)}</td>
                           <td style={tdNum('#f2c94c', true)}>${fmt(item.importe)}</td>
-                          <td style={tdNum('#3a4a5a')}>{item.resumenes}</td>
+                          <td style={tdNum('#7dd3fc')}>{item.resumenes}</td>
                         </>}
                       </tr>
                     ))}
@@ -680,7 +680,7 @@ function ResumenProductos({ periodo, onClose }) {
                   {/* Totales */}
                   <tfoot>
                     <tr style={{ borderTop: '2px solid #1e2530', background: '#0a0d12' }}>
-                      <td colSpan={2} style={{ padding: '10px 16px', color: '#3a4a5a', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                      <td colSpan={2} style={{ padding: '10px 16px', color: '#7dd3fc', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8 }}>
                         TOTALES
                       </td>
 
@@ -720,7 +720,7 @@ function ResumenProductos({ periodo, onClose }) {
 const thStyle = (align) => ({
   padding: '8px 12px',
   textAlign: align,
-  color: '#3a4a5a',
+  color: '#7dd3fc',
   fontSize: 10,
   letterSpacing: 0.8,
   textTransform: 'uppercase',
@@ -758,7 +758,7 @@ export default function Periodos() {
         <h1 style={{ fontSize: 26, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#e8f0fe' }}>
           Períodos de Distribución
         </h1>
-        <p style={{ color: '#3a4a5a', fontSize: 13, marginTop: 4 }}>
+        <p style={{ color: '#7dd3fc', fontSize: 13, marginTop: 4 }}>
           Historial de todas las distribuciones realizadas · Haz click en una fila para ver el resumen de productos
         </p>
       </div>
@@ -784,7 +784,7 @@ export default function Periodos() {
                     <strong>{p.nombre}</strong>
                   </div>
                 </Td>
-                <Td color="#3a4a5a">{fmtDate(p.fecha_inicio)} — {fmtDate(p.fecha_fin)}</Td>
+                <Td color="#7dd3fc">{fmtDate(p.fecha_inicio)} — {fmtDate(p.fecha_fin)}</Td>
                 <Td align="right">{p.pct_minorista}%</Td>
                 <Td align="right" color="#7eb8f7">{p.num_facturas}</Td>
                 <Td align="right" color="#f2c94c">{p.num_resumenes}</Td>

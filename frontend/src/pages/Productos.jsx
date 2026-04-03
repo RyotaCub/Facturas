@@ -419,7 +419,7 @@ export default function Productos() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
         <div>
           <h1 style={{ fontSize: 26, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: '#e8f0fe' }}>Productos</h1>
-          <p style={{ color: '#3a4a5a', fontSize: 13, marginTop: 4 }}>{productos.length} registros</p>
+          <p style={{ color: '#7dd3fc', fontSize: 13, marginTop: 4 }}>{productos.length} registros</p>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
           <Btn onClick={() => { setShowImport(true); setImportRows([]); setImportFileName(''); }} variant="ghost">📥 Importar Excel</Btn>
@@ -639,8 +639,8 @@ export default function Productos() {
                     </div>
                   </Td>
                   <Td align="right" color="#bb87fc">${fmt((parseFloat(p.importe_mayorista) || 0) * ((parseFloat(p.disponible_um_minorista) || 0) / (parseFloat(p.formato) || 1)))}</Td>
-                  <Td color="#3a4a5a">{fmtDate(p.fecha_inicio)}</Td>
-                  <Td color="#3a4a5a">{fmtDate(p.fecha_fin)}</Td>
+                  <Td color="#7dd3fc">{fmtDate(p.fecha_inicio)}</Td>
+                  <Td color="#7dd3fc">{fmtDate(p.fecha_fin)}</Td>
                   <Td>
                     {(() => {
                       const cat = p.categoria || 'otros';
@@ -722,7 +722,7 @@ export default function Productos() {
             <div style={{ marginBottom: 16 }}>
               <label style={{ display: 'block', marginBottom: 6, fontSize: 11, color: '#8899bb', letterSpacing: 0.8, textTransform: 'uppercase', fontWeight: 600 }}>
                 Rango de peso por pieza ({form.um_minorista || 'UM'})
-                <span style={{ color: '#3a4a5a', fontWeight: 400, marginLeft: 6, fontSize: 10 }}>— opcional, ej. lomo 12–15 lb</span>
+                <span style={{ color: '#7dd3fc', fontWeight: 400, marginLeft: 6, fontSize: 10 }}>— opcional, ej. lomo 12–15 lb</span>
               </label>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <input
@@ -732,7 +732,7 @@ export default function Productos() {
                   placeholder="mín"
                   style={{ flex: 1, background: '#0a0d12', border: '1px solid #1e2530', borderRadius: 8, padding: '9px 12px', color: '#e8f0fe', fontSize: 13, fontFamily: 'inherit', outline: 'none' }}
                 />
-                <span style={{ color: '#3a4a5a', fontSize: 13 }}>–</span>
+                <span style={{ color: '#7dd3fc', fontSize: 13 }}>–</span>
                 <input
                   type="number" min="0" step="0.01"
                   value={form.peso_pieza_max}
@@ -766,7 +766,7 @@ export default function Productos() {
                       fontFamily: 'inherit', fontSize: 13, fontWeight: 700,
                       background: form.categoria === opt.value ? opt.bg : '#0a0d12',
                       border: `1.5px solid ${form.categoria === opt.value ? opt.border : '#1e2530'}`,
-                      color: form.categoria === opt.value ? opt.color : '#3a4a5a',
+                      color: form.categoria === opt.value ? opt.color : '#7dd3fc',
                       transition: 'all 0.15s',
                     }}
                   >
@@ -774,7 +774,7 @@ export default function Productos() {
                   </button>
                 ))}
               </div>
-              <div style={{ marginTop: 6, fontSize: 11, color: '#3a4a5a' }}>
+              <div style={{ marginTop: 6, fontSize: 11, color: '#7dd3fc' }}>
                 Solo los Puntos de Venta con esta categoría recibirán este producto en el resumen minorista.
               </div>
             </div>
@@ -883,7 +883,7 @@ export default function Productos() {
             >
               {importFileName
                 ? <><div style={{ fontSize: 24 }}>📄</div><div style={{ color: '#6fcf97', fontWeight: 700, marginTop: 6 }}>{importFileName}</div><div style={{ fontSize: 11, color: '#4a6a8a', marginTop: 4 }}>Haz clic para cambiar el archivo</div></>
-                : <><div style={{ fontSize: 28 }}>📥</div><div style={{ color: '#7eb8f7', fontWeight: 700, marginTop: 6 }}>Arrastrá o hacé clic para subir el .xlsx</div><div style={{ fontSize: 11, color: '#3a4a5a', marginTop: 4 }}>Formato de factura DPKTS</div></>
+                : <><div style={{ fontSize: 28 }}>📥</div><div style={{ color: '#7eb8f7', fontWeight: 700, marginTop: 6 }}>Arrastrá o hacé clic para subir el .xlsx</div><div style={{ fontSize: 11, color: '#7dd3fc', marginTop: 4 }}>Formato de factura DPKTS</div></>
               }
             </div>
             <input ref={fileInputRef} type="file" accept=".xlsx,.xls" style={{ display: 'none' }}
@@ -921,7 +921,7 @@ export default function Productos() {
                       { value: 'otros',   label: 'Otros',    icon: '📦', bg: '#0a1a2a', border: '#1a4a6a', color: '#7eb8f7' },
                     ].map(opt => (
                       <button key={opt.value} type="button" onClick={() => setImportCategoria(opt.value)}
-                        style={{ flex: 1, padding: '10px 14px', borderRadius: 9, cursor: 'pointer', fontFamily: 'inherit', fontSize: 13, fontWeight: 700, background: importCategoria === opt.value ? opt.bg : '#0a0d12', border: `1.5px solid ${importCategoria === opt.value ? opt.border : '#1e2530'}`, color: importCategoria === opt.value ? opt.color : '#3a4a5a', transition: 'all 0.15s' }}>
+                        style={{ flex: 1, padding: '10px 14px', borderRadius: 9, cursor: 'pointer', fontFamily: 'inherit', fontSize: 13, fontWeight: 700, background: importCategoria === opt.value ? opt.bg : '#0a0d12', border: `1.5px solid ${importCategoria === opt.value ? opt.border : '#1e2530'}`, color: importCategoria === opt.value ? opt.color : '#7dd3fc', transition: 'all 0.15s' }}>
                         {opt.icon} {opt.label}
                       </button>
                     ))}

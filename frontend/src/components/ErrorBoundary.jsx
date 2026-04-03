@@ -28,7 +28,7 @@ export default class ErrorBoundary extends React.Component {
           <h2 style={{ color: '#eb5757', fontSize: 20, marginBottom: 8 }}>
             Ocurrió un error inesperado
           </h2>
-          <p style={{ color: '#3a4a5a', fontSize: 13, marginBottom: 24, maxWidth: 480 }}>
+          <p style={{ color: '#7dd3fc', fontSize: 13, marginBottom: 24, maxWidth: 480 }}>
             {this.state.error?.message || 'Error desconocido'}
           </p>
           <button
