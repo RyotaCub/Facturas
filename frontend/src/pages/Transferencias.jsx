@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
+import toast from 'react-hot-toast';
 import { api } from '../lib/api.js';
 import { fmt, fmtDate, useDebounce } from '../lib/utils.js';
 import { Badge, Input, Table, Tr, Td, Spinner, StatCard } from '../components/UI.jsx';
@@ -362,7 +363,8 @@ function EliminarModal({ open, onClose, onDone, prefijos, initialFechaIni, initi
   const [elimFechaIni, setElimFechaIni] = useState(initialFechaIni || '');
   const [elimFechaFin, setElimFechaFin] = useState(initialFechaFin || '');
   const [elimPrefijo,  setElimPrefijo]  = useState(initialPrefijo  || '');
-  const [eliminando,   setEliminando]   = useState(false);
+  const [eliminando,      setEliminando]      = useState(false);
+  const [pidiendo,        setPidiendo]        = useState(false);
 
   // Sincronizar valores iniciales cuando el modal se abre
   useEffect(() => {
@@ -370,17 +372,13 @@ function EliminarModal({ open, onClose, onDone, prefijos, initialFechaIni, initi
       setElimFechaIni(initialFechaIni || '');
       setElimFechaFin(initialFechaFin || '');
       setElimPrefijo(initialPrefijo   || '');
-      setEliminando(false); // resetear por si quedó bloqueado en sesión anterior
+      setEliminando(false);
+      setPidiendo(false);
     }
   }, [open, initialFechaIni, initialFechaFin, initialPrefijo]);
 
-  const confirmar = async () => {
-    if (!elimFechaIni && !elimFechaFin && !elimPrefijo) return;
-    const descripcion = [
-      (elimFechaIni || elimFechaFin) ? `fechas: ${elimFechaIni || '…'} → ${elimFechaFin || '…'}` : null,
-      elimPrefijo ? `prefijo: ${elimPrefijo}` : null,
-    ].filter(Boolean).join(' + ');
-    if (!confirm(`¿Eliminar las transferencias disponibles (no usadas) con ${descripcion}?\n\nEsta acción no se puede deshacer.`)) return;
+  const ejecutar = async () => {
+    setPidiendo(false);
     setEliminando(true);
     try {
       const body = {};
@@ -388,63 +386,100 @@ function EliminarModal({ open, onClose, onDone, prefijos, initialFechaIni, initi
       if (elimFechaFin) body.fecha_fin    = elimFechaFin;
       if (elimPrefijo)  body.prefijo      = elimPrefijo;
       const res = await api.deleteTransferenciasBulk(body);
-      alert(res.message);
+      toast.success(res.message);
       onClose();
       onDone();
     } catch (e) {
-      alert('Error: ' + e.message);
+      toast.error('Error: ' + e.message);
     } finally {
       setEliminando(false);
     }
   };
 
+  const hayFiltro = elimFechaIni || elimFechaFin || elimPrefijo;
+
   if (!open) return null;
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-      <div style={{ background: '#0e1117', border: '1.5px solid #5a2a2a', borderRadius: 16, padding: 28, width: '100%', maxWidth: 460 }}>
+      <div style={{
+        background: pidiendo ? '#120808' : '#0e1117',
+        border: `1.5px solid ${pidiendo ? C.red : '#5a2a2a'}`,
+        borderRadius: 16, padding: 28, width: '100%', maxWidth: 460,
+        transition: 'background 0.2s, border-color 0.2s',
+      }}>
         <h3 style={{ fontSize: 16, fontFamily: "'Syne', sans-serif", fontWeight: 800, color: C.red, marginBottom: 6 }}>
           🗑️ Eliminar transferencias
         </h3>
         <p style={{ fontSize: 12, color: C.muted, marginBottom: 20, lineHeight: 1.6 }}>
           Solo se eliminan las transferencias <strong style={{ color: '#e8f0fe' }}>no usadas</strong>. Las que ya fueron aplicadas a facturas no se tocan.
         </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          <div>
-            <div style={{ fontSize: 11, color: C.muted, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>Desde</div>
-            <input type="date" value={elimFechaIni} onChange={e => setElimFechaIni(e.target.value)}
-              style={{ background: '#0a0e14', border: `1px solid ${C.border}`, borderRadius: 8, color: '#e8f0fe', padding: '8px 12px', fontSize: 13, fontFamily: 'inherit', width: '100%', outline: 'none' }} />
-          </div>
-          <div>
-            <div style={{ fontSize: 11, color: C.muted, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>Hasta</div>
-            <input type="date" value={elimFechaFin} onChange={e => setElimFechaFin(e.target.value)}
-              style={{ background: '#0a0e14', border: `1px solid ${C.border}`, borderRadius: 8, color: '#e8f0fe', padding: '8px 12px', fontSize: 13, fontFamily: 'inherit', width: '100%', outline: 'none' }} />
-          </div>
-          <div>
-            <div style={{ fontSize: 11, color: C.muted, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>Prefijo (opcional)</div>
-            <select value={elimPrefijo} onChange={e => setElimPrefijo(e.target.value)}
-              style={{ background: '#0a0e14', border: `1px solid ${C.border}`, borderRadius: 8, color: elimPrefijo ? '#e8f0fe' : C.muted, padding: '8px 12px', fontSize: 13, fontFamily: 'inherit', width: '100%', outline: 'none' }}>
-              <option value="">— Todos los prefijos —</option>
-              {prefijos.map(({ prefijo }) => (
-                <option key={prefijo} value={prefijo}>{prefijo}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-        {!elimFechaIni && !elimFechaFin && !elimPrefijo && (
-          <p style={{ fontSize: 11, color: '#f2994a', marginTop: 14 }}>⚠️ Debes indicar al menos un filtro antes de eliminar.</p>
+
+        {!pidiendo ? (
+          <>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div>
+                <div style={{ fontSize: 11, color: C.muted, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>Desde</div>
+                <input type="date" value={elimFechaIni} onChange={e => setElimFechaIni(e.target.value)}
+                  style={{ background: '#0a0e14', border: `1px solid ${C.border}`, borderRadius: 8, color: '#e8f0fe', padding: '8px 12px', fontSize: 13, fontFamily: 'inherit', width: '100%', outline: 'none' }} />
+              </div>
+              <div>
+                <div style={{ fontSize: 11, color: C.muted, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>Hasta</div>
+                <input type="date" value={elimFechaFin} onChange={e => setElimFechaFin(e.target.value)}
+                  style={{ background: '#0a0e14', border: `1px solid ${C.border}`, borderRadius: 8, color: '#e8f0fe', padding: '8px 12px', fontSize: 13, fontFamily: 'inherit', width: '100%', outline: 'none' }} />
+              </div>
+              <div>
+                <div style={{ fontSize: 11, color: C.muted, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.8 }}>Prefijo (opcional)</div>
+                <select value={elimPrefijo} onChange={e => setElimPrefijo(e.target.value)}
+                  style={{ background: '#0a0e14', border: `1px solid ${C.border}`, borderRadius: 8, color: elimPrefijo ? '#e8f0fe' : C.muted, padding: '8px 12px', fontSize: 13, fontFamily: 'inherit', width: '100%', outline: 'none' }}>
+                  <option value="">— Todos los prefijos —</option>
+                  {prefijos.map(({ prefijo }) => (
+                    <option key={prefijo} value={prefijo}>{prefijo}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            {!hayFiltro && (
+              <p style={{ fontSize: 11, color: '#f2994a', marginTop: 14 }}>⚠️ Debes indicar al menos un filtro antes de eliminar.</p>
+            )}
+            <div style={{ display: 'flex', gap: 10, marginTop: 22 }}>
+              <button
+                onClick={() => setPidiendo(true)}
+                disabled={!hayFiltro}
+                style={{ flex: 1, padding: '10px 0', borderRadius: 8, border: '1px solid #7a2a2a', background: '#2a0e0e', color: hayFiltro ? C.red : '#5a3a3a', cursor: hayFiltro ? 'pointer' : 'not-allowed', fontSize: 13, fontFamily: 'inherit', fontWeight: 700 }}>
+                🗑️ Eliminar
+              </button>
+              <button onClick={onClose}
+                style={{ padding: '10px 20px', borderRadius: 8, border: `1px solid ${C.border}`, background: 'none', color: C.muted, cursor: 'pointer', fontSize: 13, fontFamily: 'inherit' }}>
+                Cancelar
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ background: '#1a0505', border: '1px solid #7a2a2a', borderRadius: 10, padding: '14px 16px', marginBottom: 20 }}>
+              <p style={{ fontSize: 13, color: '#e8f0fe', marginBottom: 4, fontWeight: 600 }}>¿Confirmar eliminación?</p>
+              <p style={{ fontSize: 12, color: C.muted, lineHeight: 1.5 }}>
+                {[
+                  (elimFechaIni || elimFechaFin) ? `Fechas: ${elimFechaIni || '…'} → ${elimFechaFin || '…'}` : null,
+                  elimPrefijo ? `Prefijo: ${elimPrefijo}` : null,
+                ].filter(Boolean).map((t, i) => <span key={i} style={{ display: 'block' }}>{t}</span>)}
+              </p>
+              <p style={{ fontSize: 11, color: C.red, marginTop: 8 }}>Esta acción no se puede deshacer.</p>
+            </div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button
+                onClick={ejecutar}
+                disabled={eliminando}
+                style={{ flex: 1, padding: '10px 0', borderRadius: 8, border: '1px solid #7a2a2a', background: eliminando ? '#1a0a0a' : '#3a0e0e', color: eliminando ? '#5a3a3a' : C.red, cursor: eliminando ? 'not-allowed' : 'pointer', fontSize: 13, fontFamily: 'inherit', fontWeight: 700 }}>
+                {eliminando ? '⏳ Eliminando...' : '✓ Sí, eliminar'}
+              </button>
+              <button onClick={() => setPidiendo(false)} disabled={eliminando}
+                style={{ padding: '10px 20px', borderRadius: 8, border: `1px solid ${C.border}`, background: 'none', color: C.muted, cursor: 'pointer', fontSize: 13, fontFamily: 'inherit' }}>
+                Cancelar
+              </button>
+            </div>
+          </>
         )}
-        <div style={{ display: 'flex', gap: 10, marginTop: 22 }}>
-          <button
-            onClick={confirmar}
-            disabled={eliminando || (!elimFechaIni && !elimFechaFin && !elimPrefijo)}
-            style={{ flex: 1, padding: '10px 0', borderRadius: 8, border: '1px solid #7a2a2a', background: eliminando ? '#1a0a0a' : '#2a0e0e', color: eliminando ? '#5a3a3a' : C.red, cursor: eliminando ? 'not-allowed' : 'pointer', fontSize: 13, fontFamily: 'inherit', fontWeight: 700 }}>
-            {eliminando ? '⏳ Eliminando...' : '🗑️ Confirmar eliminación'}
-          </button>
-          <button onClick={onClose} disabled={eliminando}
-            style={{ padding: '10px 20px', borderRadius: 8, border: `1px solid ${C.border}`, background: 'none', color: C.muted, cursor: 'pointer', fontSize: 13, fontFamily: 'inherit' }}>
-            Cancelar
-          </button>
-        </div>
       </div>
     </div>
   );
