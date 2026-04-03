@@ -6,7 +6,7 @@
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\" --names \"BACKEND,FRONTEND\" --prefix-colors \"cyan,magenta\"",
     "build": "cd frontend && rm -rf node_modules && npm install && npm run build",
-    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm run preview\" --names \"BACKEND,FRONTEND\" --prefix-colors \"cyan,magenta\""
+    "start": "cd backend && npm start"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
