@@ -370,6 +370,7 @@ function EliminarModal({ open, onClose, onDone, prefijos, initialFechaIni, initi
       setElimFechaIni(initialFechaIni || '');
       setElimFechaFin(initialFechaFin || '');
       setElimPrefijo(initialPrefijo   || '');
+      setEliminando(false); // resetear por si quedó bloqueado en sesión anterior
     }
   }, [open, initialFechaIni, initialFechaFin, initialPrefijo]);
 
