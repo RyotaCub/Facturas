@@ -1,0 +1,12 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno — NUNCA versionar el .env real
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime
+.DS_Store

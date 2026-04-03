@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -lh \"C:\\\\Users\\\\Felix\\\\Documents\\\\Proyecto\\\\proyecto_final\\\\proyecto_final\"/*.pdf)",
+      "mcp__postgres__query",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(find /c/Users/Felix/Documents/Proyecto/proyecto_final/proyecto_final/backend -type f -name *.env* -o -name *seed* -o -name *init* -o -name *.sql)",
+      "Bash(npm install:*)",
+      "Bash(python -c \"import pdfplumber; print\\(''pdfplumber available''\\)\")",
+      "Bash(python \"C:/Users/Felix/Documents/Proyecto/proyecto_final/proyecto_final/extract_pdf.py\")",
+      "Bash(python -c \":*)",
+      "Bash(ls -la /c/Users/Felix/Documents/Proyecto/proyecto_final/proyecto_final/*.py)"
+    ]
+  }
+}

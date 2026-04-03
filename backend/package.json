@@ -1,0 +1,21 @@
+{
+  "name": "gestdist-backend",
+  "version": "1.0.0",
+  "description": "Backend API para GestDist Pro",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "db:init": "node src/db/init.js",
+    "validate": "node src/scripts/validate-transferencias.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
