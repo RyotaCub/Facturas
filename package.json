@@ -6,10 +6,13 @@
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\" --names \"BACKEND,FRONTEND\" --prefix-colors \"cyan,magenta\"",
     "build": "cd frontend && rm -rf node_modules && npm install && npm run build",
-    "start": "cd backend && npm start"
+    "start": "cd backend && npm start",
+    "deploy": "wrangler deploy",
+    "preview": "wrangler dev"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "wrangler": "^4.80.0"
   },
   "dependencies": {
     "xlsx": "^0.18.5",
