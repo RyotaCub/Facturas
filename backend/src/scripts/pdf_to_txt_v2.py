@@ -65,14 +65,101 @@ SKIP_RE = re.compile(
 )
 
 
+def _detect_ref_origen_x(page):
+    """Detecta la posición X de inicio de la columna Ref_Origen desde el encabezado."""
+    try:
+        words = page.extract_words(x_tolerance=5, y_tolerance=3)
+        for w in words:
+            if re.match(r'Ref\.?_?Origen', w['text'], re.IGNORECASE):
+                return w['x0']
+    except Exception:
+        pass
+    return 120.0   # valor por defecto para BANDEC
+
+
 def extract_raw_lines(pdf_path):
-    """Extrae líneas del PDF descartando headers/footers del navegador."""
+    """Extrae líneas del PDF agrupando caracteres en 'runs' por proximidad.
+
+    Problema raíz: las columnas Ref_Corriente y Ref_Origen del PDF BANDEC se
+    superponen o tocan físicamente. Casos observados:
+      A) gap negativo (−8pt a −0.1pt): Ref_Corriente termina después de donde
+         Ref_Origen empieza — overlap real.
+      B) gap positivo pequeño (0.008pt a 0.90pt): columnas casi tocándose.
+      C) gap = 0.0000 exacto: última letra de Ref_Corriente termina en x=120.00
+         y primera de Ref_Origen empieza en x=120.00, sin separación ninguna.
+
+    Solución — "runs" en orden del content stream con dos condiciones de corte:
+
+    1. abs(gap) > 0.001 pt → cualquier separación real (captura casos A y B).
+       Los chars del MISMO elemento de texto siempre tienen gap = 0.000000
+       exacto (no hay kerning en este PDF); entre columnas el gap ≠ 0.
+
+    2. Corte de columna forzado (caso C, gap=0 exacto):
+       Si el char actual empieza en el límite exacto de Ref_Origen (x ≈ 120pt)
+       Y el run en curso empezó del lado de Ref_Corriente (x < 120pt),
+       forzamos un corte de run aunque el gap sea cero.
+
+    Ambas condiciones trabajan en orden del content stream, donde todos los
+    chars de Ref_Corriente vienen ANTES que los de Ref_Origen.
+    """
     lines = []
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
-            text = page.extract_text() or ''
-            for raw in text.split('\n'):
-                line = raw.strip()
+            chars = page.chars
+            if not chars:
+                continue
+
+            ref_orig_x = _detect_ref_origen_x(page)
+
+            # Agrupar caracteres por fila (tolerancia vertical ±4pt).
+            # Dentro de cada fila se conserva el orden del content stream.
+            rows = {}
+            for c in chars:
+                y_key = round(c['top'] / 4) * 4
+                if y_key not in rows:
+                    rows[y_key] = []
+                rows[y_key].append(c)
+
+            for y_key in sorted(rows.keys()):
+                row_chars = rows[y_key]   # orden content stream — NO sort por x0
+
+                # Construir runs
+                runs = []
+                cur_text = ''
+                cur_x1 = None
+                cur_start_x = None   # x0 del primer char del run actual
+
+                for c in row_chars:
+                    if cur_x1 is not None:
+                        gap = c['x0'] - cur_x1
+
+                        # Condición 1: gap real (casos A y B)
+                        gap_break = abs(gap) > 0.001
+
+                        # Condición 2: corte forzado en frontera de columna
+                        # (caso C, gap=0 exacto entre Ref_Corriente y Ref_Origen)
+                        col_break = (
+                            abs(c['x0'] - ref_orig_x) < 0.01  # char empieza justo en la frontera
+                            and cur_start_x is not None
+                            and cur_start_x < ref_orig_x       # run empezó en zona Ref_Corriente
+                        )
+
+                        if gap_break or col_break:
+                            runs.append(cur_text)
+                            cur_text = ''
+                            cur_start_x = c['x0']
+
+                    if cur_start_x is None:
+                        cur_start_x = c['x0']
+
+                    cur_text += c['text']
+                    cur_x1 = c['x1']
+
+                if cur_text:
+                    runs.append(cur_text)
+
+                # Unir runs con espacio; descartar runs vacíos o solo espacios
+                line = ' '.join(r for r in runs if r.strip()).strip()
                 if line and not SKIP_RE.match(line):
                     lines.append(line)
     return lines

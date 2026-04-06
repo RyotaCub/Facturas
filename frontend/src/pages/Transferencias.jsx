@@ -82,7 +82,13 @@ function RepararModal({ transferencias, onClose, onDone }) {
         if (!t.nombre || !esFragmentado(t.nombre)) continue;
         const key = t.nombre.trim().toUpperCase();
         if (!grupos[key]) {
-          grupos[key] = { original: key, propuesto: repararNombre(t.nombre), ids: [], checked: true };
+          grupos[key] = {
+            original: key,
+            propuesto: repararNombre(t.nombre),
+            propuestoEditado: null,   // null = usar propuesto automático
+            ids: [],
+            checked: true,
+          };
         }
         grupos[key].ids.push(t.id);
       }
@@ -99,17 +105,43 @@ function RepararModal({ transferencias, onClose, onDone }) {
   const [progreso, setProgreso]   = useState(0);
   const [total, setTotal]         = useState(0);
   const [resultado, setResultado] = useState({ ok: 0, err: 0 });
+  const [editandoKey, setEditandoKey] = useState(null);  // original del item en edición
+  const [editVal, setEditVal]         = useState('');
+  const editInputRef = useRef(null);
 
   const seleccionados  = items.filter(it => it.checked);
   const totalRegistros = seleccionados.reduce((s, it) => s + it.ids.length, 0);
   const toggleItem  = original => setItems(p => p.map(it => it.original === original ? { ...it, checked: !it.checked } : it));
   const toggleTodos = val      => setItems(p => p.map(it => ({ ...it, checked: val })));
 
+  // Nombre final que se usará al aplicar (editado > propuesto automático)
+  const nombreFinal = it => (it.propuestoEditado !== null ? it.propuestoEditado : it.propuesto).trim().toUpperCase();
+
+  const iniciarEdicion = (it, e) => {
+    e.stopPropagation();
+    setEditandoKey(it.original);
+    setEditVal(it.propuestoEditado !== null ? it.propuestoEditado : it.propuesto);
+    setTimeout(() => editInputRef.current?.select(), 30);
+  };
+
+  const confirmarEdicion = () => {
+    if (!editandoKey) return;
+    const val = editVal.trim().toUpperCase();
+    setItems(p => p.map(it =>
+      it.original === editandoKey
+        ? { ...it, propuestoEditado: val === it.propuesto ? null : val }
+        : it
+    ));
+    setEditandoKey(null);
+  };
+
+  const cancelarEdicion = () => setEditandoKey(null);
+
   const aplicar = async () => {
     const sel = items.filter(it => it.checked);
     if (!sel.length) return;
-    // Aplanar todos los ids a actualizar
-    const tareas = sel.flatMap(it => it.ids.map(id => ({ id, propuesto: it.propuesto, original: it.original })));
+    // Aplanar todos los ids a actualizar usando el nombre final (editado o propuesto)
+    const tareas = sel.flatMap(it => it.ids.map(id => ({ id, propuesto: nombreFinal(it), original: it.original })));
     setTotal(tareas.length);
     setFase('saving');
 
@@ -208,45 +240,113 @@ function RepararModal({ transferencias, onClose, onDone }) {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-                {items.map(it => (
-                  <div
-                    key={it.original}
-                    onClick={() => toggleItem(it.original)}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 12,
-                      padding: '10px 14px', borderRadius: 10, cursor: 'pointer',
-                      border: `1px solid ${it.checked ? '#3b82f6' : '#374151'}`,
-                      background: it.checked ? 'rgba(59,130,246,0.07)' : 'transparent',
-                      transition: 'all 0.12s',
-                    }}
-                  >
-                    <div style={{
-                      width: 18, height: 18, borderRadius: 4, flexShrink: 0,
-                      border: `2px solid ${it.checked ? '#3b82f6' : '#6b7280'}`,
-                      background: it.checked ? '#3b82f6' : 'transparent',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      {it.checked && <span style={{ color: '#fff', fontSize: 11 }}>✓</span>}
-                    </div>
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', minWidth: 0 }}>
-                      <span style={{ fontSize: 12, color: '#f87171', fontFamily: 'monospace', background: 'rgba(248,113,113,0.1)', borderRadius: 4, padding: '2px 8px', textDecoration: 'line-through' }}>
-                        {it.original}
-                      </span>
-                      <span style={{ color: C.muted, fontSize: 13, flexShrink: 0 }}>→</span>
-                      <span style={{ fontSize: 12, color: '#4ade80', fontFamily: 'monospace', background: 'rgba(74,222,128,0.1)', borderRadius: 4, padding: '2px 8px', fontWeight: 700 }}>
-                        {it.propuesto}
-                      </span>
-                      {it.ids.length > 1 && (
-                        <span style={{
-                          fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 99,
-                          background: 'rgba(126,184,247,0.15)', color: C.accent, flexShrink: 0,
-                        }}>
-                          ×{it.ids.length}
+                {items.map(it => {
+                  const esEditado   = it.propuestoEditado !== null;
+                  const editActivo  = editandoKey === it.original;
+                  const finalNombre = nombreFinal(it);
+                  return (
+                    <div
+                      key={it.original}
+                      onClick={() => !editActivo && toggleItem(it.original)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 12,
+                        padding: '10px 14px', borderRadius: 10,
+                        cursor: editActivo ? 'default' : 'pointer',
+                        border: `1px solid ${editActivo ? '#f59e0b' : it.checked ? '#3b82f6' : '#374151'}`,
+                        background: editActivo ? 'rgba(245,158,11,0.06)' : it.checked ? 'rgba(59,130,246,0.07)' : 'transparent',
+                        transition: 'all 0.12s',
+                      }}
+                    >
+                      {/* Checkbox */}
+                      <div style={{
+                        width: 18, height: 18, borderRadius: 4, flexShrink: 0,
+                        border: `2px solid ${it.checked ? '#3b82f6' : '#6b7280'}`,
+                        background: it.checked ? '#3b82f6' : 'transparent',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}>
+                        {it.checked && <span style={{ color: '#fff', fontSize: 11 }}>✓</span>}
+                      </div>
+
+                      {/* Nombres */}
+                      <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', minWidth: 0 }}>
+                        {/* Original */}
+                        <span style={{ fontSize: 12, color: '#f87171', fontFamily: 'monospace', background: 'rgba(248,113,113,0.1)', borderRadius: 4, padding: '2px 8px', textDecoration: 'line-through' }}>
+                          {it.original}
                         </span>
-                      )}
+                        <span style={{ color: C.muted, fontSize: 13, flexShrink: 0 }}>→</span>
+
+                        {/* Propuesto / input de edición */}
+                        {editActivo ? (
+                          <input
+                            ref={editInputRef}
+                            value={editVal}
+                            onChange={e => setEditVal(e.target.value.toUpperCase())}
+                            onKeyDown={e => {
+                              if (e.key === 'Enter')  { e.preventDefault(); confirmarEdicion(); }
+                              if (e.key === 'Escape') { e.preventDefault(); cancelarEdicion(); }
+                            }}
+                            onBlur={confirmarEdicion}
+                            onClick={e => e.stopPropagation()}
+                            autoFocus
+                            style={{
+                              fontSize: 12, fontFamily: 'monospace', fontWeight: 700,
+                              color: '#fcd34d', background: 'rgba(252,211,77,0.1)',
+                              border: '1px solid #f59e0b', borderRadius: 4,
+                              padding: '2px 8px', outline: 'none', minWidth: 140,
+                            }}
+                          />
+                        ) : (
+                          <span style={{
+                            fontSize: 12,
+                            color: esEditado ? '#fcd34d' : '#4ade80',
+                            fontFamily: 'monospace',
+                            background: esEditado ? 'rgba(252,211,77,0.1)' : 'rgba(74,222,128,0.1)',
+                            borderRadius: 4, padding: '2px 8px', fontWeight: 700,
+                          }}>
+                            {finalNombre}
+                          </span>
+                        )}
+
+                        {/* Botón editar (lápiz) */}
+                        {!editActivo && (
+                          <button
+                            onClick={e => iniciarEdicion(it, e)}
+                            title="Editar nombre manualmente"
+                            style={{
+                              background: 'none', border: 'none', cursor: 'pointer',
+                              fontSize: 13, padding: '1px 4px', borderRadius: 4,
+                              color: esEditado ? '#f59e0b' : C.muted,
+                              opacity: 0.7, flexShrink: 0,
+                            }}
+                          >
+                            ✏️
+                          </button>
+                        )}
+
+                        {/* Badge "editado" si fue modificado a mano */}
+                        {esEditado && !editActivo && (
+                          <span style={{
+                            fontSize: 9, fontWeight: 700, padding: '1px 6px', borderRadius: 99,
+                            background: 'rgba(245,158,11,0.18)', color: '#f59e0b', flexShrink: 0,
+                            textTransform: 'uppercase', letterSpacing: 1,
+                          }}>
+                            manual
+                          </span>
+                        )}
+
+                        {/* Badge cantidad de registros */}
+                        {it.ids.length > 1 && (
+                          <span style={{
+                            fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 99,
+                            background: 'rgba(126,184,247,0.15)', color: C.accent, flexShrink: 0,
+                          }}>
+                            ×{it.ids.length}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </>
           )}
